@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_desbravandojavaoo" default="compile.module.desbravandojavaoo">
+  <dirname property="module.desbravandojavaoo.basedir" file="${ant.file.module_desbravandojavaoo}"/>
+  
+  <property name="module.jdk.home.desbravandojavaoo" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.desbravandojavaoo" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.desbravandojavaoo" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.desbravandojavaoo" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="desbravandojavaoo.output.dir" value="${module.desbravandojavaoo.basedir}/out/production/DesbravandoJavaOO"/>
+  <property name="desbravandojavaoo.testoutput.dir" value="${module.desbravandojavaoo.basedir}/out/test/DesbravandoJavaOO"/>
+  
+  <path id="desbravandojavaoo.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="desbravandojavaoo.module.production.classpath">
+    <path refid="${module.jdk.classpath.desbravandojavaoo}"/>
+  </path>
+  
+  <path id="desbravandojavaoo.runtime.production.module.classpath">
+    <pathelement location="${desbravandojavaoo.output.dir}"/>
+  </path>
+  
+  <path id="desbravandojavaoo.module.classpath">
+    <path refid="${module.jdk.classpath.desbravandojavaoo}"/>
+    <pathelement location="${desbravandojavaoo.output.dir}"/>
+  </path>
+  
+  <path id="desbravandojavaoo.runtime.module.classpath">
+    <pathelement location="${desbravandojavaoo.testoutput.dir}"/>
+    <pathelement location="${desbravandojavaoo.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.desbravandojavaoo">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.desbravandojavaoo">
+    <patternset refid="excluded.from.module.desbravandojavaoo"/>
+  </patternset>
+  
+  <path id="desbravandojavaoo.module.sourcepath">
+    <dirset dir="${module.desbravandojavaoo.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.desbravandojavaoo" depends="compile.module.desbravandojavaoo.production,compile.module.desbravandojavaoo.tests" description="Compile module DesbravandoJavaOO"/>
+  
+  <target name="compile.module.desbravandojavaoo.production" depends="register.custom.compilers" description="Compile module DesbravandoJavaOO; production classes">
+    <mkdir dir="${desbravandojavaoo.output.dir}"/>
+    <javac2 destdir="${desbravandojavaoo.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.desbravandojavaoo}/javac">
+      <compilerarg line="${compiler.args.desbravandojavaoo}"/>
+      <bootclasspath refid="desbravandojavaoo.module.bootclasspath"/>
+      <classpath refid="desbravandojavaoo.module.production.classpath"/>
+      <src refid="desbravandojavaoo.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.desbravandojavaoo"/>
+    </javac2>
+    
+    <copy todir="${desbravandojavaoo.output.dir}">
+      <fileset dir="${module.desbravandojavaoo.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.desbravandojavaoo.tests" depends="register.custom.compilers,compile.module.desbravandojavaoo.production" description="compile module DesbravandoJavaOO; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.desbravandojavaoo" description="cleanup module">
+    <delete dir="${desbravandojavaoo.output.dir}"/>
+    <delete dir="${desbravandojavaoo.testoutput.dir}"/>
+  </target>
+</project>
