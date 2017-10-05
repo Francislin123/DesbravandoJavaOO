@@ -31,7 +31,7 @@ public class BookRegister {
 
         Ebook eBook02 = new Ebook(author1);
         eBook02.setName("Programing logic");
-        eBook02.setDescription("Create your programs");
+        eBook02.setDescription("Create your fist programs in Java");
         eBook02.setValue(59.90);
         eBook02.applyDiscountFromBook(0.1);
         eBook02.setIsbn("978-85-66250-22-0");
